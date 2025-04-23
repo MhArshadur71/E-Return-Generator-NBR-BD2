@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Income Tax Certificate</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-white p-10 text-[14px]">
+  <div id="certificate" class="w-[794px] h-[1123px] mx-auto border p-8">
+    <div class="text-right text-green-700 font-bold text-sm">eReturn<br><span class="text-gray-700">Reference Number: 7400683199</span></div>
+    <div class="text-center mt-4">
+      <img src="official_logo.jpg" class="h-16 mx-auto" alt="Govt Logo">
+      <h2 class="text-md font-semibold mt-2">Government of the People’s Republic of Bangladesh</h2>
+      <p>National Board of Revenue<br>Income Tax Department</p>
+      <h3 class="mt-4 text-lg font-bold">Income Tax Certificate<br>Assessment Year: 2024-2025</h3>
+    </div>
+
+    <div class="mt-10">
+      <table class="w-full text-left">
+        <tr><td class="font-semibold">Taxpayer’s Name</td><td>: Chandan Saha</td></tr>
+        <tr><td class="font-semibold">Taxpayer’s Identification Number (TIN)</td><td>: 147740620856</td></tr>
+        <tr><td class="font-semibold">Father’s Name</td><td>: CHITTA RANJAN SAHA</td></tr>
+        <tr><td class="font-semibold">Mother’s Name</td><td>: MUKUL RANI SAHA</td></tr>
+        <tr><td class="font-semibold">Current Address</td><td>: Renata Limited, Barishal Sadar, Barishal</td></tr>
+        <tr><td class="font-semibold">Permanent Address</td><td>: Pirojpur, Pirojpur Sadar, Pirojpur</td></tr>
+        <tr><td class="font-semibold">Status</td><td>: Individual -> Bangladeshi -> Having NID</td></tr>
+      </table>
+    </div>
+
+    <p class="mt-10">This is to certify that Chandan Saha is a registered taxpayer of Taxes Circle-009, Taxes Zone-Rajshahi. The taxpayer has filed the return of income for the Assessment Year 2024-2025.</p>
+
+    <div class="mt-6 text-center">
+      <img id="qrImage" class="h-28 mx-auto" src="" alt="QR Code"/>
+      <p class="text-xs text-gray-600 mt-2">This is a system generated certificate, and requires no signature.</p>
+    </div>
+  </div>
+
+  <div class="text-center mt-6">
+    <button onclick="downloadPDF()" class="bg-green-700 text-white px-4 py-2 rounded">Download PDF</button>
+  </div>
+
+  <script>
+    QRCode.toDataURL("TIN: 147740620856 | Year: 2024-25 | Ref: 7400683199", function(err, url) {
+      document.getElementById("qrImage").src = url;
+    });
+
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const element = document.getElementById("certificate");
+      const canvas = await html2canvas(element);
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({ orientation: "portrait", unit: "px", format: [794, 1123] });
+      pdf.addImage(imgData, "PNG", 0, 0);
+      pdf.save("Income-Tax-Certificate.pdf");
+    }
+  </script>
+</body>
+</html>
